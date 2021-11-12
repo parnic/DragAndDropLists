@@ -296,6 +296,10 @@ class DragAndDropLists extends StatefulWidget {
   /// different levels in the widget hierarchy cannot work together.
   final OnPointerCancel? listsOnPointerCancel;
 
+  /// Whether to animate items in the list into place after they've been dropped
+  /// onto their target or not.
+  final bool animateItemsOnDrop;
+
   DragAndDropLists({
     required this.children,
     required this.onItemReorder,
@@ -348,6 +352,7 @@ class DragAndDropLists extends StatefulWidget {
     this.removeTopPadding = false,
     this.listsOnPointerMove,
     this.listsOnPointerCancel,
+    this.animateItemsOnDrop = true,
     Key? key,
   }) : super(key: key) {
     if (listGhost == null &&
@@ -432,6 +437,7 @@ class DragAndDropListsState extends State<DragAndDropLists> {
       itemDragHandle: widget.itemDragHandle,
       constrainDraggingAxis: widget.constrainDraggingAxis,
       disableScrolling: widget.disableScrolling,
+      animateItemsOnDrop: widget.animateItemsOnDrop,
     );
 
     DragAndDropListTarget dragAndDropListTarget = DragAndDropListTarget(
