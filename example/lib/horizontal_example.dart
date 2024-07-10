@@ -1,14 +1,12 @@
-import 'package:drag_and_drop_lists/drag_and_drop_item.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
-import 'package:example/navigation_drawer.dart';
+import 'package:example/custom_navigation_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HorizontalExample extends StatefulWidget {
-  HorizontalExample({Key? key}) : super(key: key);
+  const HorizontalExample({Key? key}) : super(key: key);
 
   @override
-  _HorizontalExample createState() => _HorizontalExample();
+  State createState() => _HorizontalExample();
 }
 
 class InnerList {
@@ -36,9 +34,9 @@ class _HorizontalExample extends State<HorizontalExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Horizontal'),
+        title: const Text('Horizontal'),
       ),
-      drawer: NavigationDrawer(),
+      drawer: const CustomNavigationDrawer(),
       body: DragAndDropLists(
         children: List.generate(_lists.length, (index) => _buildList(index)),
         onItemReorder: _onItemReorder,
@@ -48,8 +46,8 @@ class _HorizontalExample extends State<HorizontalExample> {
         listDraggingWidth: 150,
         listDecoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.all(Radius.circular(7.0)),
-          boxShadow: <BoxShadow>[
+          borderRadius: const BorderRadius.all(Radius.circular(7.0)),
+          boxShadow: const <BoxShadow>[
             BoxShadow(
               color: Colors.black45,
               spreadRadius: 3.0,
@@ -58,7 +56,7 @@ class _HorizontalExample extends State<HorizontalExample> {
             ),
           ],
         ),
-        listPadding: EdgeInsets.all(8.0),
+        listPadding: const EdgeInsets.all(8.0),
       ),
     );
   }
@@ -70,14 +68,14 @@ class _HorizontalExample extends State<HorizontalExample> {
         children: <Widget>[
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(7.0)),
                 color: Colors.pink,
               ),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Text(
                 'Header ${innerList.name}',
-                style: Theme.of(context).primaryTextTheme.headline6,
+                style: Theme.of(context).primaryTextTheme.titleLarge,
               ),
             ),
           ),
@@ -87,26 +85,26 @@ class _HorizontalExample extends State<HorizontalExample> {
         children: <Widget>[
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius:
                     BorderRadius.vertical(bottom: Radius.circular(7.0)),
                 color: Colors.pink,
               ),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Text(
                 'Footer ${innerList.name}',
-                style: Theme.of(context).primaryTextTheme.headline6,
+                style: Theme.of(context).primaryTextTheme.titleLarge,
               ),
             ),
           ),
         ],
       ),
-      leftSide: VerticalDivider(
+      leftSide: const VerticalDivider(
         color: Colors.pink,
         width: 1.5,
         thickness: 1.5,
       ),
-      rightSide: VerticalDivider(
+      rightSide: const VerticalDivider(
         color: Colors.pink,
         width: 1.5,
         thickness: 1.5,

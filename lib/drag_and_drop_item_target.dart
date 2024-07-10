@@ -1,4 +1,3 @@
-import 'package:drag_and_drop_lists/drag_and_drop_builder_parameters.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +9,12 @@ class DragAndDropItemTarget extends StatefulWidget {
   final DragAndDropBuilderParameters parameters;
   final OnItemDropOnLastTarget onReorderOrAdd;
 
-  DragAndDropItemTarget(
+  const DragAndDropItemTarget(
       {required this.child,
       required this.onReorderOrAdd,
       required this.parameters,
       this.parent,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   @override
   State<StatefulWidget> createState() => _DragAndDropItemTarget();
@@ -54,29 +52,30 @@ class _DragAndDropItemTarget extends State<DragAndDropItemTarget>
               if (candidateData.isNotEmpty) {}
               return Container();
             },
-            onWillAccept: (incoming) {
+            onWillAcceptWithDetails: (details) {
               bool accept = true;
-              if (widget.parameters.itemTargetOnWillAccept != null)
+              if (widget.parameters.itemTargetOnWillAccept != null) {
                 accept =
-                    widget.parameters.itemTargetOnWillAccept!(incoming, widget);
+                    widget.parameters.itemTargetOnWillAccept!(details.data, widget);
+              }
               if (accept && mounted) {
                 setState(() {
-                  _hoveredDraggable = incoming;
+                  _hoveredDraggable = details.data;
                 });
               }
               return accept;
             },
-            onLeave: (incoming) {
+            onLeave: (data) {
               if (mounted) {
                 setState(() {
                   _hoveredDraggable = null;
                 });
               }
             },
-            onAccept: (incoming) {
+            onAcceptWithDetails: (details) {
               if (mounted) {
                 setState(() {
-                  widget.onReorderOrAdd(incoming, widget.parent!, widget);
+                  widget.onReorderOrAdd(details.data, widget.parent!, widget);
                   _hoveredDraggable = null;
                 });
               }

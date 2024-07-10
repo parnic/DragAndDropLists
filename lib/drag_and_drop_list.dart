@@ -41,15 +41,18 @@ class DragAndDropList implements DragAndDropListInterface {
 
   /// The child elements that will be contained in this list.
   /// It is possible to not provide any children when an empty list is desired.
+  @override
   final List<DragAndDropItem> children;
 
   /// Whether or not this item can be dragged.
   /// Set to true if it can be reordered.
   /// Set to false if it must remain fixed.
+  @override
   final bool canDrag;
-
+  final Key? key;
   DragAndDropList({
     required this.children,
+    this.key,
     this.header,
     this.footer,
     this.leftSide,
@@ -77,7 +80,7 @@ class DragAndDropList implements DragAndDropListInterface {
       ),
     );
     if (params.axis == Axis.horizontal) {
-      intrinsicHeight = Container(
+      intrinsicHeight = SizedBox(
         width: params.listWidth,
         child: intrinsicHeight,
       );
@@ -95,6 +98,7 @@ class DragAndDropList implements DragAndDropListInterface {
     }
 
     return Container(
+      key: key,
       width: params.axis == Axis.vertical
           ? double.infinity
           : params.listWidth - params.listPadding!.horizontal,
@@ -122,6 +126,7 @@ class DragAndDropList implements DragAndDropListInterface {
       }
       for (int i = 0; i < children.length; i++) {
         allChildren.add(DragAndDropItemWrapper(
+          key: children[i].key,
           child: children[i],
           parameters: parameters,
         ));
@@ -141,7 +146,7 @@ class DragAndDropList implements DragAndDropListInterface {
       contents.add(
         Expanded(
           child: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: verticalAlignment,
               mainAxisSize: MainAxisSize.max,
@@ -154,12 +159,12 @@ class DragAndDropList implements DragAndDropListInterface {
       contents.add(
         Expanded(
           child: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 contentsWhenEmpty ??
-                    Text(
+                    const Text(
                       'Empty list',
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
